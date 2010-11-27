@@ -1,6 +1,6 @@
 /*
     SDL_mixer:  An audio mixer library based on the SDL library
-    Copyright (C) 1997-2004 Sam Lantinga
+    Copyright (C) 1997-2009 Sam Lantinga
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -29,13 +29,20 @@
 mad_data *
 mad_openFile(const char *filename, SDL_AudioSpec *mixer) {
   SDL_RWops *rw;
+  mad_data *mp3_mad;
 
   rw = SDL_RWFromFile(filename, "rb");
   if (rw == NULL) {
 	return NULL;
   }
 
-  return mad_openFileRW(rw, mixer);
+  mp3_mad = mad_openFileRW(rw, mixer);
+  if (mp3_mad == NULL) {
+	SDL_FreeRW(rw);
+	return NULL;
+  }
+  mp3_mad->freerw = SDL_TRUE;
+  return mp3_mad;
 }
 
 mad_data *
@@ -43,28 +50,32 @@ mad_openFileRW(SDL_RWops *rw, SDL_AudioSpec *mixer) {
   mad_data *mp3_mad;
 
   mp3_mad = (mad_data *)malloc(sizeof(mad_data));
-  mp3_mad->rw = rw;
-  mad_stream_init(&mp3_mad->stream);
-  mad_frame_init(&mp3_mad->frame);
-  mad_synth_init(&mp3_mad->synth);
-  mp3_mad->frames_read = 0;
-  mad_timer_reset(&mp3_mad->next_frame_start);
-  mp3_mad->volume = MIX_MAX_VOLUME;
-  mp3_mad->status = 0;
-  mp3_mad->output_begin = 0;
-  mp3_mad->output_end = 0;
-  mp3_mad->mixer = *mixer;
-
+  if (mp3_mad) {
+	mp3_mad->rw = rw;
+	mp3_mad->freerw = SDL_FALSE;
+	mad_stream_init(&mp3_mad->stream);
+	mad_frame_init(&mp3_mad->frame);
+	mad_synth_init(&mp3_mad->synth);
+	mp3_mad->frames_read = 0;
+	mad_timer_reset(&mp3_mad->next_frame_start);
+	mp3_mad->volume = MIX_MAX_VOLUME;
+	mp3_mad->status = 0;
+	mp3_mad->output_begin = 0;
+	mp3_mad->output_end = 0;
+	mp3_mad->mixer = *mixer;
+  }
   return mp3_mad;
 }
 
 void
 mad_closeFile(mad_data *mp3_mad) {
-  SDL_FreeRW(mp3_mad->rw);
   mad_stream_finish(&mp3_mad->stream);
   mad_frame_finish(&mp3_mad->frame);
   mad_synth_finish(&mp3_mad->synth);
 
+  if (mp3_mad->freerw) {
+	SDL_FreeRW(mp3_mad->rw);
+  }
   free(mp3_mad);
 }
 
@@ -222,7 +233,7 @@ decode_frame(mad_data *mp3_mad) {
   /*assert(mp3_mad->output_end <= MAD_OUTPUT_BUFFER_SIZE);*/
 }
 
-void
+int
 mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
   int bytes_remaining;
   int num_bytes;
@@ -247,7 +258,7 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
 			 end-of-file.  Stop. */
 		  memset(out, 0, bytes_remaining);
 		  mp3_mad->status &= ~MS_playing;
-		  return;
+		  return bytes_remaining;
 		}
 	  } else {
 		decode_frame(mp3_mad);
@@ -278,6 +289,7 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len) {
 	mp3_mad->output_begin += num_bytes;
 	bytes_remaining -= num_bytes;
   }
+  return 0;
 }
 
 void
@@ -302,7 +314,7 @@ mad_seek(mad_data *mp3_mad, double position) {
 	mp3_mad->output_begin = 0;
 	mp3_mad->output_end = 0;
 
-	SDL_RWseek(mp3_mad->rw, 0, SEEK_SET);
+	SDL_RWseek(mp3_mad->rw, 0, RW_SEEK_SET);
   }
 
   /* Now we have to skip frames until we come to the right one.

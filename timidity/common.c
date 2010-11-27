@@ -34,13 +34,13 @@
 /* I guess "rb" should be right for any libc */
 #define OPEN_MODE "rb"
 
-char current_filename[1024];
+char current_filename[PATH_MAX];
 
 static PathList *pathlist=NULL;
 
 /* Try to open a file for reading. If the filename ends in one of the 
    defined compressor extensions, pipe the file through the decompressor */
-static FILE *try_to_open(char *name, int decompress, int noise_mode)
+static FILE *try_to_open(const char *name, int decompress, int noise_mode)
 {
   FILE *fp;
 
@@ -54,7 +54,8 @@ static FILE *try_to_open(char *name, int decompress, int noise_mode)
     {
       int l,el;
       static char *decompressor_list[] = DECOMPRESSOR_LIST, **dec;
-      char tmp[1024], tmp2[1024], *cp, *cp2;
+      const char *cp;
+      char tmp[PATH_MAX], tmp2[PATH_MAX], *cp2;
       /* Check if it's a compressed file */ 
       l=strlen(name);
       for (dec=decompressor_list; *dec; dec+=2)
@@ -99,7 +100,7 @@ static FILE *try_to_open(char *name, int decompress, int noise_mode)
 
 /* This is meant to find and open files for reading, possibly piping
    them through a decompressor. */
-FILE *open_file(char *name, int decompress, int noise_mode)
+FILE *open_file(const char *name, int decompress, int noise_mode)
 {
   FILE *fp;
   PathList *plp;
@@ -111,17 +112,23 @@ FILE *open_file(char *name, int decompress, int noise_mode)
       return 0;
     }
 
-#ifdef DEFAULT_PATH
   if (pathlist==NULL) {
     /* Generate path list */
+#ifdef DEFAULT_PATH
     add_to_pathlist(DEFAULT_PATH);
-  }
 #endif
+#ifdef DEFAULT_PATH1
+    add_to_pathlist(DEFAULT_PATH1);
+#endif
+#ifdef DEFAULT_PATH2
+    add_to_pathlist(DEFAULT_PATH2);
+#endif
+  }
 
   /* First try the given name */
 
-  strncpy(current_filename, name, 1023);
-  current_filename[1023]='\0';
+  strncpy(current_filename, name, PATH_MAX - 1);
+  current_filename[PATH_MAX - 1]='\0';
 
   ctl->cmsg(CMSG_INFO, VERB_DEBUG, "Trying to open %s", current_filename);
   if ((fp=try_to_open(current_filename, decompress, noise_mode)))
@@ -186,11 +193,11 @@ void close_file(FILE *fp)
 void skip(FILE *fp, size_t len)
 {
   size_t c;
-  char tmp[1024];
+  char tmp[PATH_MAX];
   while (len>0)
     {
       c=len;
-      if (c>1024) c=1024;
+      if (c>PATH_MAX) c=PATH_MAX;
       len-=c;
       if (c!=fread(tmp, 1, c, fp))
 	ctl->cmsg(CMSG_ERROR, VERB_NORMAL, "%s: skip: %s",
@@ -219,7 +226,7 @@ void *safe_malloc(size_t count)
 }
 
 /* This adds a directory to the path list */
-void add_to_pathlist(char *s)
+void add_to_pathlist(const char *s)
 {
   PathList *plp=safe_malloc(sizeof(PathList));
   strcpy((plp->path=safe_malloc(strlen(s)+1)),s);

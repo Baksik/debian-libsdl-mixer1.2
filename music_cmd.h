@@ -1,6 +1,6 @@
 /*
     SDL_mixer:  An audio mixer library based on the SDL library
-    Copyright (C) 1997-2004 Sam Lantinga
+    Copyright (C) 1997-2009 Sam Lantinga
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 
 /* This file supports an external command for playing music */
 
-#if defined(unix) || defined(__MACOSX__) /* This is a UNIX-specific hack */
+#ifdef CMD_MUSIC
 
 #include <sys/types.h>
 #include <limits.h>
@@ -60,4 +60,4 @@ extern void MusicCMD_FreeSong(MusicCMD *music);
 /* Return non-zero if a stream is currently playing */
 extern int MusicCMD_Active(MusicCMD *music);
 
-#endif /* unix */
+#endif /* CMD_MUSIC */

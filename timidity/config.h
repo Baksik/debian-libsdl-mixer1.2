@@ -22,6 +22,8 @@
 #include "SDL_config.h"
 #include "SDL_endian.h"
 
+#define TIMIDITY_ERROR_SIZE 1024
+
 /* When a patch file can't be opened, one of these extensions is
    appended to the filename and the open is tried again.
  */
@@ -171,12 +173,13 @@ typedef char int8;
    then specify the library directory in the configuration file. */
 #define CONFIG_FILE	"timidity.cfg"
 #define CONFIG_FILE_ETC "/etc/timidity.cfg"
-#define CONFIG_FILE_ETC_TIMIDITY "/etc/timidity/timidity.cfg"
 
 #if defined(__WIN32__) || defined(__OS2__)
-#define DEFAULT_PATH	"\\TIMIDITY"
+#define DEFAULT_PATH	"C:\\TIMIDITY"
 #else
-#define DEFAULT_PATH	"/usr/local/lib/timidity"
+#define DEFAULT_PATH	"/etc/timidity"
+#define DEFAULT_PATH1	"/usr/share/timidity"
+#define DEFAULT_PATH2	"/usr/local/lib/timidity"
 #endif
 
 /* These affect general volume */

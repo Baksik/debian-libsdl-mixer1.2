@@ -1,6 +1,6 @@
 /*
     SDL_mixer:  An audio mixer library based on the SDL library
-    Copyright (C) 1997-2004 Sam Lantinga
+    Copyright (C) 1997-2009 Sam Lantinga
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -43,6 +43,7 @@ enum {
 
 typedef struct {
   SDL_RWops *rw;
+  SDL_bool freerw;
   struct mad_stream stream;
   struct mad_frame frame;
   struct mad_synth synth;
@@ -66,7 +67,7 @@ void mad_start(mad_data *mp3_mad);
 void mad_stop(mad_data *mp3_mad);
 int mad_isPlaying(mad_data *mp3_mad);
 
-void mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len);
+int mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len);
 void mad_seek(mad_data *mp3_mad, double position);
 void mad_setVolume(mad_data *mp3_mad, int volume);
 

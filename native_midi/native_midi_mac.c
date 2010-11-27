@@ -22,7 +22,7 @@
 #include "SDL_config.h"
 #include "SDL_endian.h"
 
-#if __MACOS__ || __MACOSX__
+#if __MACOS__ /*|| __MACOSX__ */
 
 #include "native_midi.h"
 #include "native_midi_common.h"
@@ -89,7 +89,7 @@ int native_midi_detect()
 	return 1;
 }
 
-NativeMidiSong *native_midi_loadsong(char *midifile)
+NativeMidiSong *native_midi_loadsong(const char *midifile)
 {
 	NativeMidiSong	*song = NULL;
 	MIDIEvent		*evntlist = NULL;
@@ -339,7 +339,7 @@ void native_midi_setvolume(int volume)
 	TuneSetVolume(gTunePlayer, (0x00010000 * volume)/SDL_MIX_MAXVOLUME);
 }
 
-char *native_midi_error()
+const char *native_midi_error(void)
 {
 	return gErrorBuffer;
 }

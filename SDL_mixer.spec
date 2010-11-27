@@ -1,5 +1,5 @@
 %define name SDL_mixer
-%define version 1.2.8
+%define version 1.2.11
 %define release 1
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
@@ -54,6 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/lib/lib*.la
 %{prefix}/lib/lib*.so
 %{prefix}/include/SDL/
+%{prefix}/lib/pkgconfig/*.pc
 
 %changelog
 * Wed Jan 19 2000 Sam Lantinga 
