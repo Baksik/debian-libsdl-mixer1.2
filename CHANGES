@@ -1,3 +1,53 @@
+1.2.11:
+Sam Lantinga - Sat Nov 14 12:38:01 PST 2009
+ * Fixed initialization error and crashes if MikMod library isn't available
+Sam Lantinga - Sat Nov 14 11:22:14 PST 2009
+ * Fixed bug loading multiple music files
+
+1.2.10:
+Sam Lantinga - Sun Nov  8 08:34:48 PST 2009
+ * Added Mix_Init()/Mix_Quit() to prevent constantly loading and unloading DLLs
+Mike Frysinger - 2009-11-05 09:11:43 PST
+ * Check for fork/vfork on any platform, don't just assume it on UNIX
+Jon Atkins - Thu Nov 5 00:02:50 2009 UTC
+ * Fixed export of Mix_GetNumChunkDecoders() and Mix_GetNumMusicDecoders()
+C.W. Betts - 2009-11-02 00:16:21 PST
+ * Use newer MIDI API on Mac OS X 10.5+
+
+1.2.9:
+Ryan Gordon - Sun Oct 18 11:42:31 PDT 2009
+ * Updated native MIDI support on Mac OS X for 10.6
+Ryan Gordon - Sun Oct 11 05:29:55 2009 UTC
+ * Reset channel volumes after a fade out interrupts a fade in.
+Ryan Gordon - Sun Oct 11 02:59:12 2009 UTC
+ * Fixed crash race condition with position audio functions
+Ryan Gordon - Sat Oct 10 17:05:45 2009 UTC
+ * Fixed stereo panning in 8-bit mode
+Sam Lantinga - Sat Oct 10 11:07:15 2009 UTC
+ * Added /usr/share/timidity to the default timidity.cfg locations
+Sam Lantinga - Sat Oct  3 13:33:36 PDT 2009
+ * MOD support uses libmikmod and is dynamically loaded by default
+ * A patched version of libmikmod is included in libmikmod-3.1.12.zip
+ * The libmikmod patches fix security issues CVE-2007-6720 and CVE-2009-0179.
+Sam Lantinga - Sat Oct  3 02:49:41 PDT 2009
+ * Added TIMIDITY_CFG environment variable to fully locate timidity.cfg
+Sam Lantinga - Fri Oct  2 07:15:35 PDT 2009
+ * Implemented seamless looping for music playback
+Forrest Voight - 2009-06-13 20:31:38 PDT
+ * ID3 files are now recognized as MP3 format
+Steven Noonan - 2008-05-13 13:31:36 PDT
+ * Fixed native MIDI crash on 64-bit Windows
+Ryan Gordon - Fri Jun 5 16:07:08 2009 UTC
+ * Added decoder enumeration API:
+	Mix_GetNumChunkDecoders(), Mix_GetChunkDecoder(),
+	Mix_GetNumMusicDecoders(), Mix_GetMusicDecoder()
+Austen Dicken - Tue Feb 26 23:28:27 PST 2008
+ * Added support for FLAC audio both as chunks and streaming
+Tilman Sauerbeck - Tue Feb 26 03:44:47 PST 2008
+ * Added support for streaming WAV files with Mix_LoadMUS_RW()
+Ryan Gordon - Mon Feb 4 17:10:08 UTC 2008
+ * Fixed crash caused by not resetting position_channels
+
 1.2.8:
 Sam Lantinga - Wed Jul 18 09:45:54 PDT 2007
  * Improved detection of Ogg Vorbis and Tremor libraries

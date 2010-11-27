@@ -158,17 +158,17 @@ static void MIDItoStream(NativeMidiSong *song, MIDIEvent *evntlist)
   song->MusicLoaded=1;
 }
 
-void CALLBACK MidiProc( HMIDIIN hMidi, UINT uMsg, DWORD dwInstance,
-                        DWORD dwParam1, DWORD dwParam2 )
+void CALLBACK MidiProc( HMIDIIN hMidi, UINT uMsg, DWORD_PTR dwInstance,
+                        DWORD_PTR dwParam1, DWORD_PTR dwParam2 )
 {
     switch( uMsg )
     {
     case MOM_DONE:
-      if ((currentsong->MusicLoaded) && ((DWORD)dwParam1 == (DWORD)&currentsong->MidiStreamHdr))
+      if ((currentsong->MusicLoaded) && (dwParam1 == (DWORD_PTR)&currentsong->MidiStreamHdr))
         BlockOut(currentsong);
       break;
     case MOM_POSITIONCB:
-      if ((currentsong->MusicLoaded) && ((DWORD)dwParam1 == (DWORD)&currentsong->MidiStreamHdr))
+      if ((currentsong->MusicLoaded) && (dwParam1 == (DWORD_PTR)&currentsong->MidiStreamHdr))
         currentsong->MusicPlaying=0;
       break;
     default:
@@ -181,17 +181,14 @@ int native_midi_detect()
   MMRESULT merr;
   HMIDISTRM MidiStream;
 
-  merr=midiStreamOpen(&MidiStream,&MidiDevice,1,(DWORD)&MidiProc,0,CALLBACK_FUNCTION);
+  merr=midiStreamOpen(&MidiStream,&MidiDevice,(DWORD)1,(DWORD_PTR)MidiProc,(DWORD_PTR)0,CALLBACK_FUNCTION);
   if (merr!=MMSYSERR_NOERROR)
-    MidiStream=0;
-  midiStreamClose(MidiStream);
-  if (!MidiStream)
     return 0;
-  else
-    return 1;
+  midiStreamClose(MidiStream);
+  return 1;
 }
 
-NativeMidiSong *native_midi_loadsong(char *midifile)
+NativeMidiSong *native_midi_loadsong(const char *midifile)
 {
 	NativeMidiSong *newsong;
 	MIDIEvent		*evntlist = NULL;
@@ -314,7 +311,7 @@ void native_midi_setvolume(int volume)
   midiOutSetVolume((HMIDIOUT)hMidiStream, MAKELONG(calcVolume , calcVolume));
 }
 
-char *native_midi_error()
+const char *native_midi_error(void)
 {
   return "";
 }

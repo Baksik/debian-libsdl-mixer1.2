@@ -1,6 +1,6 @@
 /*
     PLAYWAVE:  A test application for the SDL mixer library.
-    Copyright (C) 1997-2004 Sam Lantinga
+    Copyright (C) 1997-2009 Sam Lantinga
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
     slouken@libsdl.org
 */
 
-/* $Id: playwave.c 2430 2006-05-14 21:07:27Z slouken $ */
+/* $Id: playwave.c 5191 2009-11-05 00:02:50Z slouken $ */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -37,6 +37,7 @@
 /*
  * rcg06132001 various mixer tests. Define the ones you want.
  */
+/*#define TEST_MIX_DECODERS*/
 /*#define TEST_MIX_VERSIONS*/
 /*#define TEST_MIX_CHANNELFINISHED*/
 /*#define TEST_MIX_PANNING*/
@@ -81,6 +82,24 @@ static void output_test_warnings(void)
 static int audio_open = 0;
 static Mix_Chunk *wave = NULL;
 
+/* rcg06042009 Report available decoders. */
+#if (defined TEST_MIX_DECODERS)
+static void report_decoders(void)
+{
+	int i, total;
+
+    printf("Supported decoders...\n");
+	total = Mix_GetNumChunkDecoders();
+	for (i = 0; i < total; i++) {
+		fprintf(stderr, " - chunk decoder: %s\n", Mix_GetChunkDecoder(i));
+	}
+
+	total = Mix_GetNumMusicDecoders();
+	for (i = 0; i < total; i++) {
+		fprintf(stderr, " - music decoder: %s\n", Mix_GetMusicDecoder(i));
+	}
+}
+#endif
 
 /* rcg06192001 Check new Mixer version API. */
 #if (defined TEST_MIX_VERSIONS)
@@ -414,7 +433,11 @@ int main(int argc, char *argv[])
 	audio_open = 1;
 
 #if (defined TEST_MIX_VERSIONS)
-    test_versions();
+	test_versions();
+#endif
+
+#if (defined TEST_MIX_DECODERS)
+	report_decoders();
 #endif
 
 	/* Load the requested wave file */

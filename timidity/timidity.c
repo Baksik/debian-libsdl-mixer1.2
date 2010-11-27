@@ -45,10 +45,10 @@ int num_ochannels;
 
 #define MAXWORDS 10
 
-static int read_config_file(char *name)
+static int read_config_file(const char *name)
 {
   FILE *fp;
-  char tmp[1024], *w[MAXWORDS], *cp;
+  char tmp[PATH_MAX], *w[MAXWORDS], *cp;
   ToneBank *bank=0;
   int i, j, k, line=0, words;
   static int rcf_count=0;
@@ -294,9 +294,10 @@ static int read_config_file(char *name)
 
 int Timidity_Init(int rate, int format, int channels, int samples)
 {
-  if (read_config_file(CONFIG_FILE)<0) {
-    if (read_config_file(CONFIG_FILE_ETC)<0) {
-      if (read_config_file(CONFIG_FILE_ETC_TIMIDITY)<0) {
+  const char *env = getenv("TIMIDITY_CFG");
+  if (!env || read_config_file(env)<0) {
+    if (read_config_file(CONFIG_FILE)<0) {
+      if (read_config_file(CONFIG_FILE_ETC)<0) {
         return(-1);
       }
     }
@@ -366,8 +367,9 @@ int Timidity_Init(int rate, int format, int channels, int samples)
   return(0);
 }
 
-char timidity_error[1024] = "";
-char *Timidity_Error(void)
+char timidity_error[TIMIDITY_ERROR_SIZE] = "";
+const char *Timidity_Error(void)
 {
   return(timidity_error);
 }
+

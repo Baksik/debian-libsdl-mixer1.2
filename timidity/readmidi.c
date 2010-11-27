@@ -258,7 +258,7 @@ static int sysex(uint32 len, uint8 *syschan, uint8 *sysa, uint8 *sysb, SDL_RWops
 
 /* Print a string from the file, followed by a newline. Any non-ASCII
    or unprintable characters will be converted to periods. */
-static int dumpstring(int32 len, char *label)
+static int dumpstring(int32 len, const char *label)
 {
   signed char *s=safe_malloc(len+1);
   if (len != (int32)SDL_RWread(rw, s, 1, len))
@@ -349,7 +349,7 @@ static MidiEventList *read_midi_event(void)
 			  "(MIDI port number %d)", midi_port_number);
 		    midi_port_number &= 0x03;
 		}
-		else SDL_RWseek(rw, len, SEEK_CUR);
+		else SDL_RWseek(rw, len, RW_SEEK_CUR);
 		break;
 
 	      case 0x2F: /* End of Track */
@@ -362,7 +362,7 @@ static MidiEventList *read_midi_event(void)
 	      default:
 		ctl->cmsg(CMSG_INFO, VERB_DEBUG, 
 		     "(Meta event type 0x%02x, length %ld)", type, len);
-		SDL_RWseek(rw, len, SEEK_CUR);
+		SDL_RWseek(rw, len, RW_SEEK_CUR);
 		break;
 	      }
 	}
@@ -1028,7 +1028,7 @@ past_riff:
       ctl->cmsg(CMSG_WARNING, VERB_NORMAL, 
 	   "%s: MIDI file header size %ld bytes", 
 	   current_filename, len);
-      SDL_RWseek(rw, len-6, SEEK_CUR); /* skip the excess */
+      SDL_RWseek(rw, len-6, RW_SEEK_CUR); /* skip the excess */
     }
   if (format<0 || format >2)
     {

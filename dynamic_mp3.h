@@ -1,6 +1,6 @@
 /*
     SDL_mixer:  An audio mixer library based on the SDL library
-    Copyright (C) 1997-2004 Sam Lantinga
+    Copyright (C) 1997-2009 Sam Lantinga
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -43,7 +43,7 @@ typedef struct {
 
 extern smpeg_loader smpeg;
 
+#endif /* MUSIC_MP3 */
+
 extern int Mix_InitMP3();
 extern void Mix_QuitMP3();
-
-#endif

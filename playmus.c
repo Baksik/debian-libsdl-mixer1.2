@@ -1,6 +1,6 @@
 /*
     PLAYMUS:  A test application for the SDL mixer library.
-    Copyright (C) 1997-2004 Sam Lantinga
+    Copyright (C) 1997-2009 Sam Lantinga
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
     slouken@libsdl.org
 */
 
-/* $Id: playmus.c 2704 2006-08-20 23:25:46Z slouken $ */
+/* $Id: playmus.c 4211 2008-12-08 00:27:32Z slouken $ */
 
 #include <stdlib.h>
 #include <stdio.h>
