@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian SDL packages maintainers <pkg-sdl-maintainers@lists.alioth.debian.org>
 Uploaders: Sam Hocevar (Debian packages) <sam+deb@zoy.org>, Aurelien Jarno <aurel32@debian.org>, Josselin Mouette <joss@debian.org>, Barry deFreese <bdefreese@debian.org>
 Standards-Version: 3.8.1
-Build-Depends: debhelper (>= 5.0), quilt, libtool, libsdl1.2-dev (>= 1.2.4), libogg-dev, libvorbis-dev (>= 1.0.0-3), libsmpeg-dev (>= 0.4.5+cvs20030824-1.3), libmikmod-dev
+Build-Depends: debhelper (>= 5.0), quilt, libtool, libsdl1.2-dev (>= 1.2.4), libogg-dev, libvorbis-dev (>= 1.0.0-3), libsmpeg-dev (>= 0.4.5+cvs20030824-1.3), libmikmod-dev, libflac-dev
 Homepage: http://www.libsdl.org/projects/SDL_mixer/
 
 Package: libsdl-mixer1.2
@@ -18,7 +18,7 @@ Description: mixer library for Simple DirectMedia Layer 1.2
 
 Package: libsdl-mixer1.2-dev
 Architecture: any
-Depends: libsdl-mixer1.2 (= ${binary:Version}), libc6-dev, libsdl1.2-dev (>= 1.2.4), libogg-dev, libvorbis-dev, libsmpeg-dev (>= 0.4.4-7), libmikmod-dev
+Depends: libsdl-mixer1.2 (= ${binary:Version}), libc6-dev, libsdl1.2-dev (>= 1.2.4), libogg-dev, libvorbis-dev, libsmpeg-dev (>= 0.4.4-7), libmikmod-dev, libflac-dev
 Conflicts: libsdl-mixer-dev, libsdl-mixer1.0-dev, libsdl-mixer1.1-dev
 Section: libdevel
 Description: development files for SDL1.2 mixer library

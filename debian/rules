@@ -12,9 +12,11 @@ else
 endif
 
 confflags += --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info
-confflags += --enable-music-native-midi-gpl --enable-music-libmikmod
+confflags += --enable-music-native-midi-gpl
 confflags += --disable-music-ogg-shared
 confflags += --disable-music-mp3-shared
+confflags += --disable-music-flac-shared
+confflags += --disable-music-mod-shared
 confflags += "CPPFLAGS=-Wall"
 confflags += "LDFLAGS=-Wl,-z,defs -Wl,-Bsymbolic -Wl,--as-needed"
 
