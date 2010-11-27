@@ -7,5 +7,4 @@
 03_awe_voice.patch
 04_timidity_cfg_opts.diff
 05_fallback_to_freepats.diff
-300_native_midi_gpl_build_issues.patch
 301_FLAC_SDL_RWops_memory_leaks.patch
