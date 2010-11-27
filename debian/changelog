@@ -1,3 +1,9 @@
+sdl-mixer1.2 (1.2.11-1) UNRELEASED; urgency=low
+
+  * New upstream version. Closes: #568445
+
+ -- Jon Dowland <jmtd@debian.org>  Sat, 27 Nov 2010 10:02:45 +0000
+
 sdl-mixer1.2 (1.2.8-6) unstable; urgency=low
 
   [ Barry deFreese ]
