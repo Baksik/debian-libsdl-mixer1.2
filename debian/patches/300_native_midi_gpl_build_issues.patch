@@ -1,0 +1,15 @@
+Patch split out from the alternative packaging attached to
+bug #600467. Thanks Edward Lee.
+
+diff -ruN -x debian SDL_mixer-1.2.11/native_midi_gpl/playmidi.h sdl-mixer1.2-1.2.11/native_midi_gpl/playmidi.h
+--- SDL_mixer-1.2.11/native_midi_gpl/playmidi.h	2009-10-13 00:06:52.000000000 +0100
++++ sdl-mixer1.2-1.2.11/native_midi_gpl/playmidi.h	2010-11-27 15:43:15.000000000 +0000
+@@ -53,7 +53,7 @@
+ #include <sys/soundcard.h>
+ #include <sys/ioctl.h>
+ #ifdef linux
+-#include <linux/awe_voice.h>
++#include "awe_voice.h"
+ #else
+ #include <awe_voice.h>
+ #endif

@@ -8,3 +8,5 @@
 04_timidity_cfg_opts.diff
 05_fallback_to_freepats.diff
 200_channel_segfaults.diff
+300_native_midi_gpl_build_issues.patch
+301_FLAC_SDL_RWops_memory_leaks.patch

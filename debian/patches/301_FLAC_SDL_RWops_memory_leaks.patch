@@ -1,0 +1,18 @@
+Patch split out from the alternative packaging attached to
+bug #600467. Thanks Edward Lee.
+
+diff -ruN -x debian SDL_mixer-1.2.11/music_flac.c sdl-mixer1.2-1.2.11/music_flac.c
+--- SDL_mixer-1.2.11/music_flac.c	2009-11-07 05:00:12.000000000 +0000
++++ sdl-mixer1.2-1.2.11/music_flac.c	2010-11-27 15:43:15.000000000 +0000
+@@ -559,6 +559,11 @@
+ 			free (music->cvt.buf);
+ 		}
+ 
++		if (music->rwops )
++		{
++			SDL_RWclose( music->rwops );
++		}
++
+ 		free (music);
+ 	}
+ }
