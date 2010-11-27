@@ -1,0 +1,55 @@
+Index: sdl-mixer1.2-1.2.8/mikmod/mplayer.c
+===================================================================
+--- sdl-mixer1.2-1.2.8.orig/mikmod/mplayer.c	2007-10-07 21:59:18.000000000 +0000
++++ sdl-mixer1.2-1.2.8/mikmod/mplayer.c	2007-10-07 22:01:06.000000000 +0000
+@@ -1896,7 +1896,7 @@
+ 	SAMPLE *s;
+ 
+ 	pf->totalchn=pf->realchn=0;
+-	for (mp_channel=0;mp_channel<md_sngchn;mp_channel++) {
++	for (mp_channel=0;mp_channel<pf->numchn;mp_channel++) {
+ 		aout=&pf->voice[mp_channel];
+ 		i=aout->i;
+ 		s=aout->s;
+@@ -2630,12 +2630,10 @@
+ 		pf->patbrk=0;
+ 		pf->vbtick=pf->sngspd;
+ 
+-		for (t=0;t<md_sngchn;t++) {
++		for (t=0;t<pf->numchn;t++) {
+ 			Voice_Stop_internal(t);
+ 			pf->voice[t].i=NULL;
+ 			pf->voice[t].s=NULL;
+-		}
+-		for (t=0;t<pf->numchn;t++) {
+ 			pf->control[t].i=NULL;
+ 			pf->control[t].s=NULL;
+ 		}
+@@ -2655,12 +2653,10 @@
+ 		pf->patbrk=0;
+ 		pf->vbtick=pf->sngspd;
+ 
+-		for (t=0;t<md_sngchn;t++) {
++		for (t=0;t<pf->numchn;t++) {
+ 			Voice_Stop_internal(t);
+ 			pf->voice[t].i=NULL;
+ 			pf->voice[t].s=NULL;
+-		}
+-		for (t=0;t<pf->numchn;t++) {
+ 			pf->control[t].i=NULL;
+ 			pf->control[t].s=NULL;
+ 		}
+@@ -2682,12 +2678,10 @@
+ 		pf->sngpos=pos;
+ 		pf->vbtick=pf->sngspd;
+ 
+-		for (t=0;t<md_sngchn;t++) {
++		for (t=0;t<pf->numchn;t++) {
+ 			Voice_Stop_internal(t);
+ 			pf->voice[t].i=NULL;
+ 			pf->voice[t].s=NULL;
+-		}
+-		for (t=0;t<pf->numchn;t++) {
+ 			pf->control[t].i=NULL;
+ 			pf->control[t].s=NULL;
+ 		}

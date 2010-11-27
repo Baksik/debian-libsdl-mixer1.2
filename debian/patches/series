@@ -1,0 +1,11 @@
+00_link-libm.patch
+00_no_lvorbis_logg.diff
+01_autoreconf.patch
+01_relibtoolize.patch 
+02_hurd.patch -p1
+03_awe_voice.patch -p1
+200_channel_segfaults.diff
+210_dev_snd_seq.diff
+220_mixer_segfaults.diff
+04_timidity_cfg_opts.diff
+05_fallback_to_freepats.diff
