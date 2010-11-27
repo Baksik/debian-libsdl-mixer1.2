@@ -1,13 +1,22 @@
-Index: sdl-mixer1.2-1.2.8/configure.in
-===================================================================
---- sdl-mixer1.2-1.2.8.orig/configure.in	2008-05-21 11:51:07.000000000 +0000
-+++ sdl-mixer1.2-1.2.8/configure.in	2008-05-21 11:51:18.000000000 +0000
-@@ -317,7 +317,7 @@
+diff --git a/configure.in b/configure.in
+index 7d23387..03d22b5 100644
+--- a/configure.in
++++ b/configure.in
+@@ -364,7 +364,7 @@ if test x$enable_music_ogg = xyes; then
+                 echo "-- dynamic libvorbisidec -> $ogg_lib"
+                 EXTRA_CFLAGS="$EXTRA_CFLAGS -DOGG_DYNAMIC=\\\"$ogg_lib\\\""
+             else
+-                EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lvorbisidec -lvorbis -logg $LIBM"
++                EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lvorbisidec -lvorbis $LIBM"
+             fi
+         else
+             AC_MSG_WARN([*** Unable to find Ogg Vorbis Tremor library (http://www.xiph.org/)])
+@@ -394,7 +394,7 @@ if test x$enable_music_ogg = xyes; then
                  echo "-- dynamic libvorbisfile -> $ogg_lib"
                  EXTRA_CFLAGS="$EXTRA_CFLAGS -DOGG_DYNAMIC=\\\"$ogg_lib\\\""
              else
--                EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lvorbisfile -lvorbis -logg"
-+                EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lvorbisfile"
+-                EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lvorbisfile -lvorbis -logg $LIBM"
++                EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lvorbisfile -lvorbis $LIBM"
              fi
-         fi
-     fi
+         else
+             AC_MSG_WARN([*** Unable to find Ogg Vorbis library (http://www.xiph.org/)])
