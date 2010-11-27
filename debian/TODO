@@ -1,6 +1,5 @@
 ensure the following patches apply:
 	200_channel_segfaults.diff - mikmod?
-	220_mixer_segfaults.diff - already applied upstream?
 
 reconsider these patches
 	debian/patches/01_autoreconf.patch
