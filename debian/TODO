@@ -1,10 +1,7 @@
 ensure the following patches apply:
-	01_autoreconf.patch
-	01_relibtoolize.patch
-	02_hurd.patch
-	03_awe_voice.patch
-	04_timidity_cfg_opts.diff
+	01_autoreconf.patch - lots of failures
+	01_relibtoolize.patch - failures
+	02_hurd.patch - 1/3 failures
 	05_fallback_to_freepats.diff
-	200_channel_segfaults.diff
-	210_dev_snd_seq.diff
-	220_mixer_segfaults.diff
+	200_channel_segfaults.diff - mikmod?
+	220_mixer_segfaults.diff - already applied upstream?
