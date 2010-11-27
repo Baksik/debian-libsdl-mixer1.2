@@ -1,5 +1,4 @@
 ensure the following patches apply:
-	02_hurd.patch - 1/3 failures
 	05_fallback_to_freepats.diff
 	200_channel_segfaults.diff - mikmod?
 	220_mixer_segfaults.diff - already applied upstream?
