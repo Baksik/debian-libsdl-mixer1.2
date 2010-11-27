@@ -1,5 +1,4 @@
 ensure the following patches apply:
-	00_mikmod_syslibs.patch
 	00_no_lvorbis_logg.diff
 	01_autoreconf.patch
 	01_relibtoolize.patch
